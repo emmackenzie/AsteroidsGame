@@ -3,31 +3,41 @@ SpaceShip bob = new SpaceShip();
 public void setup() 
 {
   size(500,500);
+  background(0);
 }
 public void draw() 
 {
+  //bob.move();
   bob.show();
 }
 
+public void keyPressed()
+{
+  if (key == 'a')
+    bob.setPointDirection(180);
+
+   if (key == 'd')
+    bob.setPointDirection(0); 
+}
 
 class SpaceShip extends Floater  
 {   
 
-  SpaceShip() 
+  public SpaceShip() 
   {
-    corners = 4;
+    corners = 3;
     xCorners = new int[corners];
     yCorners = new int[corners];
-    xCorners[0] = -10;
-    yCorners[0] = 0;
-    xCorners[1] = 10;
-    yCorners[1] =  -10;
-    xCorners[2] = 10;
-    yCorners[2] = 10;
+    xCorners[0] = -8;
+    yCorners[0] = -8;
+    xCorners[1] = 16;
+    yCorners[1] =  0;
+    xCorners[2] = -8;
+    yCorners[2] = 8;
 
     myColor = color(255,0,0);
-    myCenterX = 0;
-    myCenterY = 0;
+    myCenterX = 250;
+    myCenterY = 250;
     myDirectionX = 0;
     myDirectionY = 0;
     myPointDirection = 0;
