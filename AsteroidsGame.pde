@@ -5,19 +5,41 @@ public void setup()
   size(500,500);
   background(0);
 }
+
 public void draw() 
 {
-  //bob.move();
+  background(0);
+  bob.move();
   bob.show();
 }
 
 public void keyPressed()
 {
-  if (key == 'a')
-    bob.setPointDirection(180);
+    // ship enters hyperspace
+    if (key == ' ')
+    {
+      bob.setDirectionX(0);
+      bob.setDirectionY(0);
+      bob.setX((int)(Math.random()*500));
+      bob.setY((int)(Math.random()*500));
+      bob.setPointDirection((int) (Math.random()*360));
+    } 
 
-   if (key == 'd')
-    bob.setPointDirection(0); 
+    // ship moves right
+      if (key == 's')
+        bob.rotate(-10);
+
+    //ship moves left
+      if (key == 'f')
+        bob.rotate(10);
+
+
+    //ship accelerates
+      if (key == 'j')
+        bob.accelerate(.1);
+
+      if (key == 'k')
+        bob.accelerate(- .1);
 }
 
 class SpaceShip extends Floater  
