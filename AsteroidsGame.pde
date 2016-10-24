@@ -28,11 +28,11 @@ public void keyPressed()
 
     // ship moves left
       if (key == 's')
-        bob.rotate(10);
+        bob.rotate(-10);
 
     //ship moves right
       if (key == 'f')
-        bob.rotate(-10);
+        bob.rotate(10);
 
 
     //ship accelerates
