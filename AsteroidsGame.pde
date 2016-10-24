@@ -1,4 +1,5 @@
 SpaceShip bob = new SpaceShip();
+Star [] stars = new Star[100];
 
 public void setup() 
 {
@@ -41,6 +42,33 @@ public void keyPressed()
       if (key == 'k')
         bob.accelerate(- .1);
 }
+
+class Star 
+{
+  private int myX, myY;
+  private int myColor;
+
+  public Star()
+  {
+    myX = (int)(Math.random() * 500);
+    myY = (int)(Math.random() * 500);
+    myColor = color(255);
+  }
+
+  public void make()
+  {
+    for (int i = 0; i < stars.length; i ++)
+      stars[i] = new Star();
+  }
+
+  public void draw()
+  {
+    fill(myColor);
+    ellipse(myX, myY, 10,10);
+  }
+}
+
+
 
 class SpaceShip extends Floater  
 {   
