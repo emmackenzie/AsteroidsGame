@@ -26,13 +26,13 @@ public void keyPressed()
       bob.setPointDirection((int) (Math.random()*360));
     } 
 
-    // ship moves right
+    // ship moves left
       if (key == 's')
-        bob.rotate(-10);
-
-    //ship moves left
-      if (key == 'f')
         bob.rotate(10);
+
+    //ship moves right
+      if (key == 'f')
+        bob.rotate(-10);
 
 
     //ship accelerates
