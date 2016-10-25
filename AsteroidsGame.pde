@@ -13,11 +13,12 @@ public void setup()
 public void draw() 
 {
   background(0);
-  bob.move();
-  bob.show();
 
     for (int i = 0; i < stars.length; i ++)
       stars[i].draw();
+
+    bob.move();
+    bob.show();
 
 }
 
@@ -77,15 +78,12 @@ class SpaceShip extends Floater
 
   public SpaceShip() 
   {
-    corners = 3;
-    xCorners = new int[corners];
-    yCorners = new int[corners];
-    xCorners[0] = -8;
-    yCorners[0] = -8;
-    xCorners[1] = 16;
-    yCorners[1] =  0;
-    xCorners[2] = -8;
-    yCorners[2] = 8;
+    corners = 19;
+    int[] xS =  {-6,-9,-8,-5,-5,-3,4,10,8,15,8,10,4,-3,-5,-5,-8,-9,-6};
+    int [] yS = {1,1,4,4,8,8,4,3,2,0,-2,-3,-4,-8,-8,-4,-4,-1,-1};
+    xCorners = xS;
+    yCorners = yS;
+
 
     myColor = color(255,0,0);
     myCenterX = 250;
