@@ -24,7 +24,7 @@ public void draw()
 public void keyPressed()
 {
     // ship enters hyperspace
-    if (key == ' ')
+    if (key == 'a')
     {
       bob.setDirectionX(0);
       bob.setDirectionY(0);
