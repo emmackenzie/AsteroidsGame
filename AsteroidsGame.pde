@@ -1,4 +1,5 @@
 SpaceShip bob = new SpaceShip();
+Rockets sue = new Rockets();
 Star [] stars = new Star[200];
 
 public void setup() 
@@ -19,6 +20,9 @@ public void draw()
 
     bob.move();
     bob.show();
+    sue.move();
+    sue.show();
+
 
 }
 
@@ -45,7 +49,11 @@ public void keyPressed()
 
     //ship accelerates
       if (key == 'j')
+      {
         bob.accelerate(.1);
+
+        //sue.show();
+      }
 
       if (key == 'k')
         bob.accelerate(- .1);
@@ -71,7 +79,25 @@ class Star
   }
 }
 
+class Rockets extends SpaceShip
+{
+  public Rockets()
+  {
+    corners = 4;
+    int[] xS = {-5,5,5,-5};
+    int[] yS = {5,5,-5,-5};
+    xCorners = xS;
+    yCorners = yS;
 
+    myColor= color(255,0,0);
+
+    myCenterX = 240;
+    myCenterY = 250;
+    myDirectionX = 0;
+    myDirectionY = 0;
+    myPointDirection = 0;
+  }
+}
 
 class SpaceShip extends Floater  
 {   
@@ -85,7 +111,7 @@ class SpaceShip extends Floater
     yCorners = yS;
 
 
-    myColor = color(255,0,0);
+    myColor = color(152,152,152);
     myCenterX = 250;
     myCenterY = 250;
     myDirectionX = 0;
