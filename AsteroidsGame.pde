@@ -25,7 +25,7 @@ public void draw()
 public void keyPressed()
 {
     // ship enters hyperspace
-    if (key == 'a')
+    if (key == ' ')
     {
       bob.setDirectionX(0);
       bob.setDirectionY(0);
@@ -78,9 +78,9 @@ class SpaceShip extends Floater
 
   public SpaceShip() 
   {
-    corners = 19;
-    int[] xS =  {-6,-9,-8,-5,-5,-3,4,10,8,15,8,10,4,-3,-5,-5,-8,-9,-6};
-    int [] yS = {1,1,4,4,8,8,4,3,2,0,-2,-3,-4,-8,-8,-4,-4,-1,-1};
+    corners = 13;
+    int[] xS =  {-13,-16,-10,-10,-5,10,18,10,-5,-10,-10,-16,-13};
+    int [] yS = {3,8,8,13,13,3,0,-3,-13,-13,-8,-8,-3};
     xCorners = xS;
     yCorners = yS;
 
