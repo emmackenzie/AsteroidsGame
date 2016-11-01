@@ -1,7 +1,9 @@
 SpaceShip bob = new SpaceShip();
 Rockets sue = new Rockets();
 Star [] stars = new Star[200];
-//Asteroid [] rock = new Asteroid[10];
+Asteroid [] rock = new Asteroid[10];
+
+//Asteroid rock = new Asteroid();
 
 public void setup() 
 {
@@ -10,8 +12,8 @@ public void setup()
 
   for (int i = 0; i < stars.length; i ++)
       stars[i] = new Star();
-  //for(int i = 0; i < rock.length; i ++)
-    //rock[i] = new Asteroid();
+  for(int i = 0; i < rock.length; i ++)
+    rock[i] = new Asteroid();
 }
 
 public void draw() 
@@ -20,14 +22,19 @@ public void draw()
 
     for (int i = 0; i < stars.length; i ++)
       stars[i].draw();
-    //for (int i = 0; i < rock.length; i ++)
-     // rock[i].show();
+    for (int i = 0; i < rock.length; i ++)
+    {
+      rock[i].move();
+      rock[i].show();
+      rock[i].accelerate(.01);
+    }
 
     bob.move();
     bob.show();
+    /*rock.move();
+    rock.show();
+    rock.accelerate(.01);*/
     
-   // rock.move();
-    //rock.show();
     //sue.move();
     //sue.show();
 }
@@ -48,20 +55,21 @@ public void keyPressed()
       if (key == 's')
        {
         bob.rotate(-10);
-        sue.rotate(-10);
+        //sue.rotate(-10);
       } 
 
     //ship moves right
       if (key == 'f')
         {
           bob.rotate(10);
-        sue.rotate(10);
+        //sue.rotate(10);
         }
 
     //ship accelerates
       if (key == 'j')
       {
         bob.accelerate(.1);
+
         //sue.show();
       }
 
@@ -158,11 +166,11 @@ class Asteroid extends Floater
 
 
     myColor = color(255,0,0);
-    myCenterX = 250;
-    myCenterY = 250;
-    myDirectionX = 0;
-    myDirectionY = 0;
-    myPointDirection = 0;
+    myCenterX = Math.random()*500;
+    myCenterY = Math.random()*500;
+    myDirectionX = Math.random()*3 - 1;
+    myDirectionY = Math.random()*3 - 1;
+    myPointDirection = Math.random()*360;
   }
 
   public void move()
