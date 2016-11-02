@@ -26,14 +26,11 @@ public void draw()
     {
       rock[i].move();
       rock[i].show();
-      rock[i].accelerate(.01);
+     
     }
 
     bob.move();
     bob.show();
-    /*rock.move();
-    rock.show();
-    rock.accelerate(.01);*/
     
     //sue.move();
     //sue.show();
@@ -158,14 +155,27 @@ class Asteroid extends Floater
   {
     rotationSpeed = (int)(Math.random()*7) -3;
 
-    corners = 4;
-    int[] xS = {-5,5,5,-5};
-    int[] yS = {5,5,-5,-5};
+    corners = 6;
+    int[] xS = {-6,6,10,6,-6,-10};
+    int[] yS = {8,8,0,-8,-8,0};
     xCorners = xS;
     yCorners = yS;
 
+    /*xCorners = new int[corners];
+    yCorners = new int[corners];
 
-    myColor = color(255,0,0);
+    xCorners[0] = 8;
+    yCorners[0] =(int)(Math.random()*3) +6;
+    xCorners[1] = -8;
+    yCorners[1] = (int)(Math.random()*3) -6;
+    xCorners[2] = 10;
+    yCorners[2] = (int)(Math.random()*3) +6;
+    xCorners[3] = -10;
+    yCorners[3] = (int)(Math.random()*3) -6;
+    //((int)(Math.random()*3 +6)*/
+
+
+    myColor = color(255,188,70);
     myCenterX = Math.random()*500;
     myCenterY = Math.random()*500;
     myDirectionX = Math.random()*3 - 1;
