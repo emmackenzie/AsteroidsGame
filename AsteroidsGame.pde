@@ -31,9 +31,8 @@ public void draw()
 
     bob.move();
     bob.show();
-    
-    //sue.move();
-    //sue.show();
+   // sue.move();
+
 }
 
 public void keyPressed()
@@ -66,7 +65,6 @@ public void keyPressed()
       if (key == 'j')
       {
         bob.accelerate(.1);
-
         //sue.show();
       }
 
@@ -156,23 +154,22 @@ class Asteroid extends Floater
     rotationSpeed = (int)(Math.random()*7) -3;
 
     corners = 6;
-    int[] xS = {-6,6,10,6,-6,-10};
-    int[] yS = {8,8,0,-8,-8,0};
-    xCorners = xS;
-    yCorners = yS;
 
-    /*xCorners = new int[corners];
+    xCorners = new int[corners];
     yCorners = new int[corners];
 
-    xCorners[0] = 8;
-    yCorners[0] =(int)(Math.random()*3) +6;
-    xCorners[1] = -8;
-    yCorners[1] = (int)(Math.random()*3) -6;
-    xCorners[2] = 10;
-    yCorners[2] = (int)(Math.random()*3) +6;
-    xCorners[3] = -10;
-    yCorners[3] = (int)(Math.random()*3) -6;
-    //((int)(Math.random()*3 +6)*/
+    xCorners[0] = (int)(Math.random()*5) -6;
+    yCorners[0] =(int)(Math.random()*5) +5;
+    xCorners[1] = (int)(Math.random()*5) +6;
+    yCorners[1] = (int)(Math.random()*5) +5;
+    xCorners[2] = (int)(Math.random()*5) +10;
+    yCorners[2] = (int)(Math.random()*5);
+    xCorners[3] = (int)(Math.random()*5) +6;
+    yCorners[3] = (int)(Math.random()*5) -5;
+    xCorners[4] = (int)(Math.random()*5) -6;
+    yCorners[4] = (int)(Math.random()*5) -5;
+    xCorners[5] = (int)(Math.random()*5) -10;
+    yCorners[5] = (int)(Math.random()*5);
 
 
     myColor = color(255,188,70);
