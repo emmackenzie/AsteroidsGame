@@ -3,8 +3,6 @@ Rockets sue = new Rockets();
 Star [] stars = new Star[200];
 Asteroid [] rock = new Asteroid[10];
 
-//Asteroid rock = new Asteroid();
-
 public void setup() 
 {
   size(500,500);
@@ -172,7 +170,7 @@ class Asteroid extends Floater
     yCorners[5] = (int)(Math.random()*5);
 
 
-    myColor = color(255,188,70);
+    myColor = color(255,85,85);
     myCenterX = Math.random()*500;
     myCenterY = Math.random()*500;
     myDirectionX = Math.random()*3 - 1;
@@ -184,6 +182,26 @@ class Asteroid extends Floater
   {
     rotate(rotationSpeed);
     super.move();
+  }
+
+  public void show()
+  {
+    
+    noFill();  
+    strokeWeight(3);
+    stroke(myColor);    
+    //convert degrees to radians for sin and cos         
+    double dRadians = myPointDirection*(Math.PI/180);                 
+    int xRotatedTranslated, yRotatedTranslated;    
+    beginShape();         
+    for(int nI = 0; nI < corners; nI++)    
+    {     
+      //rotate and translate the coordinates of the floater using current direction 
+      xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians)) - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
+      yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
+      vertex(xRotatedTranslated,yRotatedTranslated);    
+    }   
+    endShape(CLOSE);  
   }
 
 
