@@ -1,8 +1,7 @@
 SpaceShip bob = new SpaceShip();
 Rockets sue = new Rockets();
 Star [] stars = new Star[200];
-Asteroid [] rocks = new Asteroid[10];
-Asteroid rock = new Asteroid();
+  Asteroid rock = new Asteroid();
 ArrayList <Asteroid> rockCluster = new ArrayList <Asteroid>();
 
 public void setup() 
@@ -12,11 +11,11 @@ public void setup()
 
   for (int i = 0; i < stars.length; i ++)
       stars[i] = new Star();
-  for(int i = 0; i < rocks.length; i ++)
-    rocks[i] = new Asteroid();
 
-    //for(int i = 0; i < rockCluster.size(); i ++)
-    //Asteroid newRock = rockCluster.draw(i);
+  for(int i = 0; i < 15; i ++)
+  {
+      rockCluster.add(new Asteroid());
+  }
 }
 
 public void draw() 
@@ -25,17 +24,23 @@ public void draw()
 
     for (int i = 0; i < stars.length; i ++)
       stars[i].draw();
-    for (int i = 0; i < rocks.length; i ++)
+
+ // remove asteroids from array list when touching ship
+   for(int i = 0; i < rockCluster.size(); i ++)
     {
-      rocks[i].move();
-      rocks[i].show();
-     
+      if (dist(bob.getX(), bob.getY(), rockCluster.get(i).getX(), rockCluster.get(i).getY()) < 10 )
+        rockCluster.remove(i);
+      else
+        {
+          rockCluster.get(i).show();
+          rockCluster.get(i).move();
+        }
     }
 
     bob.move();
     bob.show();
-   // sue.move();
 
+  
 }
 
 public void keyPressed()
@@ -48,20 +53,22 @@ public void keyPressed()
       bob.setX((int)(Math.random()*500));
       bob.setY((int)(Math.random()*500));
       bob.setPointDirection((int) (Math.random()*360));
+
     } 
+
 
     // ship moves left
       if (key == 's')
        {
         bob.rotate(-10);
-        //sue.rotate(-10);
+        
       } 
 
     //ship moves right
       if (key == 'f')
         {
           bob.rotate(10);
-        //sue.rotate(10);
+        
         }
 
     //ship accelerates
@@ -97,25 +104,7 @@ class Star
   }
 }
 
-class Rockets extends SpaceShip
-{
-  public Rockets()
-  {
-    corners = 4;
-    int[] xS = {-5,5,5,-5};
-    int[] yS = {5,5,-5,-5};
-    xCorners = xS;
-    yCorners = yS;
 
-    myColor= color(255,0,0);
-
-    myCenterX = 240;
-    myCenterY = 250;
-    myDirectionX = 0;
-    myDirectionY = 0;
-    myPointDirection = 0;
-  }
-}
 
 class SpaceShip extends Floater  
 {   
@@ -234,23 +223,14 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   protected double myPointDirection; //holds current direction the ship is pointing in degrees    
   
   abstract public void setX(int x); 
-
   abstract public int getX(); 
-
   abstract public void setY(int y);  
-
   abstract public int getY();   
-
   abstract public void setDirectionX(double x); 
-
   abstract public double getDirectionX();  
-
   abstract public void setDirectionY(double y); 
-
   abstract public double getDirectionY();  
-
   abstract public void setPointDirection(int degrees);  
-
   abstract public double getPointDirection(); 
 
   //Accelerates the floater in the direction it is pointing (myPointDirection)   
@@ -274,22 +254,14 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     myCenterY += myDirectionY;     
 
     //wrap around screen    
-    if(myCenterX >width)
-    {     
-      myCenterX = 0;    
-    }    
-    else if (myCenterX<0)
-    {     
-      myCenterX = width;    
-    }    
-    if(myCenterY >height)
-    {    
-      myCenterY = 0;    
-    }   
-    else if (myCenterY < 0)
-    {     
-      myCenterY = height;    
-    }   
+    if(myCenterX >width)     
+      myCenterX = 0;        
+    else if (myCenterX<0)    
+      myCenterX = width;        
+    if(myCenterY >height)  
+      myCenterY = 0;      
+    else if (myCenterY < 0)    
+      myCenterY = height;      
   }   
   public void show ()  //Draws the floater at the current position  
   {             
@@ -310,3 +282,33 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   }   
 } 
 
+/*class Rockets extends Floater
+{
+  public Rockets()
+  {
+    corners = 4;
+    int[] xS = {-12,-8,-8,-12};
+    int[] yS = {2,2,-2,-2};
+    xCorners = xS;
+    yCorners = yS;
+
+    myColor= color(255,0,0);
+
+    myCenterX = bob.getX() - 10;
+    myCenterY = bob.getY();
+    myDirectionX = 0;
+    myDirectionY = 0;
+    myPointDirection = 0;
+  }
+
+   public void setX(int x) {myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y)  {myCenterY = y;}
+  public int getY()   {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
+  public double getDirectionX()  {return myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY()  {return myDirectionY;}
+  public void setPointDirection(int degrees)  {myPointDirection = degrees;}
+  public double getPointDirection() {return (int)myPointDirection;}
+}*/
