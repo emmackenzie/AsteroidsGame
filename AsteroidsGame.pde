@@ -1,5 +1,5 @@
 SpaceShip bob = new SpaceShip();
-Rockets sue = new Rockets();
+//Rockets sue = new Rockets();
 Star [] stars = new Star[200];
   Asteroid rock = new Asteroid();
 ArrayList <Asteroid> rockCluster = new ArrayList <Asteroid>();
