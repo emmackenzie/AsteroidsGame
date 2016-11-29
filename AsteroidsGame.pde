@@ -1,9 +1,9 @@
 SpaceShip bob = new SpaceShip();
-//Rockets sue = new Rockets();
 Star [] stars = new Star[200];
-  Asteroid rock = new Asteroid();
+//Bullet sue = new Bullet();
+  //Asteroid rock = new Asteroid();
 ArrayList <Asteroid> rockCluster = new ArrayList <Asteroid>();
-
+boolean rockets = false;
 public void setup() 
 { 
   size(500,500);
@@ -24,23 +24,22 @@ public void draw()
 
     for (int i = 0; i < stars.length; i ++)
       stars[i].draw();
-
+  
+ 
  // remove asteroids from array list when touching ship
    for(int i = 0; i < rockCluster.size(); i ++)
     {
-      if (dist(bob.getX(), bob.getY(), rockCluster.get(i).getX(), rockCluster.get(i).getY()) < 10 )
-        rockCluster.remove(i);
-      else
+       if (dist(bob.getX(), bob.getY(), rockCluster.get(i).getX(), rockCluster.get(i).getY()) < 10 )
+          rockCluster.remove(i);
+       else
         {
           rockCluster.get(i).show();
           rockCluster.get(i).move();
         }
     }
-
-    bob.move();
+ bob.move();
     bob.show();
-
-  
+    
 }
 
 public void keyPressed()
@@ -53,35 +52,24 @@ public void keyPressed()
       bob.setX((int)(Math.random()*500));
       bob.setY((int)(Math.random()*500));
       bob.setPointDirection((int) (Math.random()*360));
-
     } 
-
-
-    // ship moves left
+     // ship moves left
       if (key == 's')
-       {
-        bob.rotate(-10);
-        
-      } 
-
+        bob.turn(-10);
     //ship moves right
       if (key == 'f')
-        {
-          bob.rotate(10);
-        
-        }
-
-    //ship accelerates
+          bob.turn(10);
       if (key == 'j')
       {
         bob.accelerate(.1);
-        //sue.show();
+        rockets = true;
       }
-
       if (key == 'k')
-      {
         bob.accelerate(- .1);
-    }
+}
+public void keyReleased() 
+{
+  rockets = false;
 }
 
 class Star 
@@ -136,6 +124,86 @@ class SpaceShip extends Floater
   public double getDirectionY()  {return myDirectionY;}
   public void setPointDirection(int degrees)  {myPointDirection = degrees;}
   public double getPointDirection() {return (int)myPointDirection;}
+
+public void show ()
+  {  
+    fill(myColor);   
+    stroke(myColor);    
+    
+    //convert degrees to radians for sin and cos     
+    float dRadians = (float)(myPointDirection*(Math.PI/180));
+    translate((float)myCenterX, (float)myCenterY);
+    rotate((float)dRadians);
+    beginShape();
+    for (int nI = 0; nI < corners; nI++)
+    {
+      vertex(xCorners[nI], yCorners[nI]);
+    }
+     
+    endShape(CLOSE);
+    // if(rockets == true)
+    // {
+    //   fill(255,0,0);
+    //   noStroke();
+
+    //   beginShape();
+    //   endShape(CLOSE);
+      
+    // int[] xS =  {-17,-22,-20,-22,-20,-22,-17};
+    // int [] yS = {-5,-5,-3,0,3,5,5};
+    // xCorners = xS;
+    // yCorners = yS;
+    // }
+    rotate(-1*(float)dRadians);
+    translate(-1*(float)myCenterX, -1*(float)myCenterY);
+  }
+}
+
+class Bullet extends Floater
+{
+  public Bullet (SpaceShip theShip){
+    myCenterX = bob.getX();
+    myCenterY = bob.getY();
+    myPointDirection = bob.getPointDirection();
+    double dRadians =myPointDirection*(Math.PI/180);
+    myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionX(); 
+    myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
+    myColor = color(255,0,0);
+  }
+
+  public void setX(int x) {myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y)  {myCenterY = y;}
+  public int getY()   {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
+  public double getDirectionX()  {return myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY()  {return myDirectionY;}
+  public void setPointDirection(int degrees)  {myPointDirection = degrees;}
+  public double getPointDirection() {return (int)myPointDirection;}
+
+  public void show ()
+  {
+    fill(myColor);   
+    stroke(myColor);    
+    
+    //translate the (x,y) center of the ship to the correct position
+    translate((float)myCenterX, (float)myCenterY);
+
+    //convert degrees to radians for rotate()     
+    float dRadians = (float)(myPointDirection*(Math.PI/180));
+    
+    //rotate so that the polygon will be drawn in the correct direction
+    rotate(dRadians);
+    
+   //ellipse((double)myCenterX,(double)myCenterY,5,5);
+
+    //"unrotate" and "untranslate" in reverse order
+    rotate(-1*dRadians);
+    translate(-1*(float)myCenterX, -1*(float)myCenterY);
+  }    
+  
+
 }
 
 class Asteroid extends Floater 
@@ -174,7 +242,7 @@ class Asteroid extends Floater
 
   public void move()
   {
-    rotate(rotationSpeed);
+    turn(rotationSpeed);
     super.move();
   }
 
@@ -198,7 +266,6 @@ class Asteroid extends Floater
     endShape(CLOSE);  
   }
 
-
   public void setX(int x) {myCenterX = x;}
   public int getX() {return (int)myCenterX;}
   public void setY(int y)  {myCenterY = y;}
@@ -221,7 +288,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   protected double myCenterX, myCenterY; //holds center coordinates   
   protected double myDirectionX, myDirectionY; //holds x and y coordinates of the vector for direction of travel   
   protected double myPointDirection; //holds current direction the ship is pointing in degrees    
-  
+
+
   abstract public void setX(int x); 
   abstract public int getX(); 
   abstract public void setY(int y);  
@@ -242,7 +310,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     myDirectionX += ((dAmount) * Math.cos(dRadians));    
     myDirectionY += ((dAmount) * Math.sin(dRadians));       
   }   
-  public void rotate (int nDegreesOfRotation)   
+  public void turn (int nDegreesOfRotation)   
   {     
     //rotates the floater by a given number of degrees    
     myPointDirection+=nDegreesOfRotation;   
@@ -262,53 +330,34 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
       myCenterY = 0;      
     else if (myCenterY < 0)    
       myCenterY = height;      
-  }   
-  public void show ()  //Draws the floater at the current position  
+  } 
+
+
+   public void show ()  //Draws the floater at the current position  
   {             
     fill(myColor);   
     stroke(myColor);    
-    //convert degrees to radians for sin and cos         
-    double dRadians = myPointDirection*(Math.PI/180);                 
-    int xRotatedTranslated, yRotatedTranslated;    
-    beginShape();         
-    for(int nI = 0; nI < corners; nI++)    
-    {     
-      //rotate and translate the coordinates of the floater using current direction 
-      xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians)) - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
-      yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
-      vertex(xRotatedTranslated,yRotatedTranslated);    
-    }   
-    endShape(CLOSE);  
+    
+    //translate the (x,y) center of the ship to the correct position
+    translate((float)myCenterX, (float)myCenterY);
+
+    //convert degrees to radians for rotate()     
+    float dRadians = (float)(myPointDirection*(Math.PI/180));
+    
+    //rotate so that the polygon will be drawn in the correct direction
+    rotate(dRadians);
+    
+    //draw the polygon
+    beginShape();
+    for (int nI = 0; nI < corners; nI++)
+    {
+      vertex(xCorners[nI], yCorners[nI]);
+    }
+    endShape(CLOSE);
+
+    //"unrotate" and "untranslate" in reverse order
+    rotate(-1*dRadians);
+    translate(-1*(float)myCenterX, -1*(float)myCenterY);
   }   
 } 
 
-/*class Rockets extends Floater
-{
-  public Rockets()
-  {
-    corners = 4;
-    int[] xS = {-12,-8,-8,-12};
-    int[] yS = {2,2,-2,-2};
-    xCorners = xS;
-    yCorners = yS;
-
-    myColor= color(255,0,0);
-
-    myCenterX = bob.getX() - 10;
-    myCenterY = bob.getY();
-    myDirectionX = 0;
-    myDirectionY = 0;
-    myPointDirection = 0;
-  }
-
-   public void setX(int x) {myCenterX = x;}
-  public int getX() {return (int)myCenterX;}
-  public void setY(int y)  {myCenterY = y;}
-  public int getY()   {return (int)myCenterY;}
-  public void setDirectionX(double x) {myDirectionX = x;}
-  public double getDirectionX()  {return myDirectionX;}
-  public void setDirectionY(double y) {myDirectionY = y;}
-  public double getDirectionY()  {return myDirectionY;}
-  public void setPointDirection(int degrees)  {myPointDirection = degrees;}
-  public double getPointDirection() {return (int)myPointDirection;}
-}*/
