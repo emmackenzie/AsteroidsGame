@@ -1,8 +1,8 @@
 SpaceShip bob = new SpaceShip();
 Star [] stars = new Star[200];
-//Bullet sue = new Bullet();
-  //Asteroid rock = new Asteroid();
+Bullet sue = new Bullet(bob);
 ArrayList <Asteroid> rockCluster = new ArrayList <Asteroid>();
+ArrayList <Bullet> shootyThings = new ArrayList <Bullet>();
 boolean rockets = false;
 public void setup() 
 { 
@@ -37,8 +37,9 @@ public void draw()
           rockCluster.get(i).move();
         }
     }
- bob.move();
-    bob.show();
+  bob.move();
+  bob.show();
+  sue.show();
     
 }
 
@@ -66,6 +67,12 @@ public void keyPressed()
       }
       if (key == 'k')
         bob.accelerate(- .1);
+
+      if(key == 't')
+      {
+        for(int i = 0; i < 1000; i ++)
+          shootyThings.add(new Bullet(bob));
+      }
 }
 public void keyReleased() 
 {
@@ -141,19 +148,15 @@ public void show ()
     }
      
     endShape(CLOSE);
-    // if(rockets == true)
-    // {
-    //   fill(255,0,0);
-    //   noStroke();
-
-    //   beginShape();
-    //   endShape(CLOSE);
-      
-    // int[] xS =  {-17,-22,-20,-22,-20,-22,-17};
-    // int [] yS = {-5,-5,-3,0,3,5,5};
-    // xCorners = xS;
-    // yCorners = yS;
-    // }
+    if(rockets == true)
+    {
+      fill(255,0,0);
+      noStroke();
+      triangle(-17,-5,-22,-5,-17,5);
+      triangle(-17,5,-22,5,-17,-5);
+      triangle(-17,-5,-22,0,-17,5);
+   
+    }
     rotate(-1*(float)dRadians);
     translate(-1*(float)myCenterX, -1*(float)myCenterY);
   }
@@ -162,12 +165,12 @@ public void show ()
 class Bullet extends Floater
 {
   public Bullet (SpaceShip theShip){
-    myCenterX = bob.getX();
-    myCenterY = bob.getY();
-    myPointDirection = bob.getPointDirection();
+    myCenterX = theShip.getX();
+    myCenterY = theShip.getY();
+    myPointDirection = theShip.getPointDirection();
     double dRadians =myPointDirection*(Math.PI/180);
-    myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionX(); 
-    myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
+    myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX(); 
+    myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionY();
     myColor = color(255,0,0);
   }
 
@@ -186,6 +189,7 @@ class Bullet extends Floater
   {
     fill(myColor);   
     stroke(myColor);    
+    ellipse((float)myCenterX,(float)myCenterY,(float)5,(float)5);
     
     //translate the (x,y) center of the ship to the correct position
     translate((float)myCenterX, (float)myCenterY);
@@ -195,8 +199,6 @@ class Bullet extends Floater
     
     //rotate so that the polygon will be drawn in the correct direction
     rotate(dRadians);
-    
-   //ellipse((double)myCenterX,(double)myCenterY,5,5);
 
     //"unrotate" and "untranslate" in reverse order
     rotate(-1*dRadians);
