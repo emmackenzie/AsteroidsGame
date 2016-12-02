@@ -1,9 +1,10 @@
 SpaceShip bob = new SpaceShip();
 Star [] stars = new Star[200];
-Bullet sue = new Bullet(bob);
+//Bullet sue = new Bullet(bob);
 ArrayList <Asteroid> rockCluster = new ArrayList <Asteroid>();
 ArrayList <Bullet> shootyThings = new ArrayList <Bullet>();
 boolean rockets = false;
+int score = 0;
 public void setup() 
 { 
   size(500,500);
@@ -13,9 +14,8 @@ public void setup()
       stars[i] = new Star();
 
   for(int i = 0; i < 15; i ++)
-  {
       rockCluster.add(new Asteroid());
-  }
+          
 }
 
 public void draw() 
@@ -24,6 +24,9 @@ public void draw()
 
     for (int i = 0; i < stars.length; i ++)
       stars[i].draw();
+
+  textSize(20);
+  text("Score: " + score, 400, 20);
   
  
  // remove asteroids from array list when touching ship
@@ -37,9 +40,33 @@ public void draw()
           rockCluster.get(i).move();
         }
     }
+
+for(int i = 0; i < shootyThings.size(); i ++)
+{
+  shootyThings.get(i).show();
+  shootyThings.get(i).move();
+
+}
+
+for (int i = 0; i < rockCluster.size(); i ++)
+{
+  for(int j = 0; j < shootyThings.size(); j++)
+  {
+    if (dist(shootyThings.get(j).getX(),shootyThings.get(j).getY(), rockCluster.get(i).getX(), rockCluster.get(i).getY()) < 10)
+    {
+      rockCluster.remove(i);
+      shootyThings.remove(j);
+      score++;
+      break;
+   
+    }
+  }
+}
+
+
+
   bob.move();
   bob.show();
-  sue.show();
     
 }
 
@@ -70,7 +97,7 @@ public void keyPressed()
 
       if(key == 't')
       {
-        for(int i = 0; i < 1000; i ++)
+       // for(int i = 0; i < 1000; i ++)
           shootyThings.add(new Bullet(bob));
       }
 }
@@ -171,7 +198,7 @@ class Bullet extends Floater
     double dRadians =myPointDirection*(Math.PI/180);
     myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX(); 
     myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionY();
-    myColor = color(255,0,0);
+    myColor = color(120,102,151);
   }
 
   public void setX(int x) {myCenterX = x;}
@@ -189,21 +216,14 @@ class Bullet extends Floater
   {
     fill(myColor);   
     stroke(myColor);    
-    ellipse((float)myCenterX,(float)myCenterY,(float)5,(float)5);
-    
-    //translate the (x,y) center of the ship to the correct position
-    translate((float)myCenterX, (float)myCenterY);
+    ellipse((float)myCenterX,(float)myCenterY,(float)3,(float)3);
+  }  
 
-    //convert degrees to radians for rotate()     
-    float dRadians = (float)(myPointDirection*(Math.PI/180));
-    
-    //rotate so that the polygon will be drawn in the correct direction
-    rotate(dRadians);
-
-    //"unrotate" and "untranslate" in reverse order
-    rotate(-1*dRadians);
-    translate(-1*(float)myCenterX, -1*(float)myCenterY);
-  }    
+  public void move()
+  {
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;
+  }  
   
 
 }
