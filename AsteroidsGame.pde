@@ -63,10 +63,15 @@ for (int i = 0; i < rockCluster.size(); i ++)
   }
 }
 
-
-
   bob.move();
   bob.show();
+
+  if(rockCluster.size() == 0)
+  {
+    background(0);
+    textSize(50);
+    text("GAME OVER", 100,250);
+  }
     
 }
 
